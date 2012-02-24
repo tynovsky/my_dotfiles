@@ -12,9 +12,10 @@ case $TERM in
                 PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
                 ;;
 esac
-
-
 export ignoreeof=0
+
+
+PS1='\n\t \[\033[01;32m\]\h \[\033[01;34m\]\W \[\033[01;32m\]$ \[\033[00m\]'
 
 # Aliasy
 alias ..='cd ..'
@@ -70,8 +71,6 @@ my_rm() {
     fi
 }
 
-# Ondrejov prompt (slightly changed :-)
-PS1='\n\t \[\033[01;32m\]\h \[\033[01;34m\]\W \[\033[01;32m\]$ \[\033[00m\]'
 
 # Zvetseni historie prikazu
 HISTSIZE=50000
