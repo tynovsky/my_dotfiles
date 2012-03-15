@@ -11,7 +11,9 @@ set smartcase
 
 "set smartindent
 call pathogen#infect()
+
 syntax on
+
 filetype plugin indent on
 set background=dark
 if has('gui_running')
@@ -28,7 +30,10 @@ set guioptions=aegirLt
 
 "less violent matching-parenthesis highlighting
 "highlight MatchParen cterm=underline ctermbg=none ctermfg=none
-highlight MatchParen gui=bold guibg=bg guifg=Red
+highlight MatchParen gui=bold guibg=bg guifg=Blue
+
+set list
+set listchars=tab:\ \ ,trail:▒
 
 nmap    <CR>        <C-]>
 nmap    <BS>        <C-T>
