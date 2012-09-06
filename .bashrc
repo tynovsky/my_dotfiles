@@ -17,9 +17,10 @@ export ignoreeof=0
 
 GREEN='\[\033[01;32m\]'
 BLUE='\[\033[01;34m\]'
+YELLOW='\[\033[1;33m\]'
 NOCOLOR='\[\033[00m\]'
 
-PS1='\n\t '$GREEN'\h '$BLUE'\W'"\$(__git_ps1)"$GREEN' $ '$NOCOLOR
+PS1='\n\t '$GREEN'\h '$BLUE'\W'$YELLOW"\$(__git_ps1)"$GREEN' $ '$NOCOLOR
 
 # Aliasy
 alias ..='cd ..'
