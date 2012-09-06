@@ -15,7 +15,11 @@ esac
 export ignoreeof=0
 
 
-PS1='\n\t \[\033[01;32m\]\h \[\033[01;34m\]\W \[\033[01;32m\]$ \[\033[00m\]'
+GREEN='\[\033[01;32m\]'
+BLUE='\[\033[01;34m\]'
+NOCOLOR='\[\033[00m\]'
+
+PS1='\n\t '$GREEN'\h '$BLUE'\W'"\$(__git_ps1)"$GREEN' $ '$NOCOLOR
 
 # Aliasy
 alias ..='cd ..'
