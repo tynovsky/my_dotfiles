@@ -96,4 +96,4 @@ autocmd BufNewFile,BufRead *.pm compiler perl
 
 """""""Nette stuff
 autocmd BufNewFile,BufRead *.latte set filetype=html
-
+au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab

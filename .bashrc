@@ -41,7 +41,28 @@ alias rm='my_rm "$BASH_SOURCE"'
 zhead() {
     zcat "$1" | head
 }
+alias v='gvim --remote-tab'
 
+extract () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2) tar xjvpf $1 ;;
+      *.tar.gz) tar xzvpf $1 ;;
+      *.bz2) bunzip2 $1 ;;
+      *.rar) unrar e $1 ;;
+      *.gz) gunzip $1 ;;
+      *.tar) tar xvpf $1 ;;
+      *.tbz2) tar xjvpf $1 ;;
+      *.tgz) tar xzvpf $1 ;;
+      *.zip) unzip "$1" ;;
+      *.Z) uncompress $1 ;;
+      *.7z) 7z x $1 ;;
+      *) echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
 
 my_mv() {
     MY_BASH_SOURCE="$1"
@@ -103,3 +124,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 #export PAGER=/usr/share/vim/vim72/macros/less.sh
 #alias less=/usr/share/vim/vim72/macros/less.sh
+
+export PATH=/home/miroslav/bin/Sencha/Cmd/3.1.2.342:$PATH
+
+export SENCHA_CMD_3_0_0="/home/miroslav/bin/Sencha/Cmd/3.1.2.342"
