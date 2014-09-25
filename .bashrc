@@ -34,14 +34,22 @@ alias trash='trash-put'
 alias go='gnome-open'
 alias inst='sudo apt-get install'
 alias vimenc='vim -c '\''let $enc =&fileencoding | execute "!echo Encoding:  $enc" | q'\'''
+alias node='nodejs'
 
 alias mv='my_mv "$BASH_SOURCE"'
 alias cp='my_cp "$BASH_SOURCE"'
 alias rm='my_rm "$BASH_SOURCE"'
+alias v=vim_in_new_or_existing_window
 zhead() {
     zcat "$1" | head
 }
-alias v='gvim --remote-tab'
+
+vim_in_new_or_existing_window () {
+    XDG_CONFIG_HOME=~/.terminal-solarized \
+        xfce4-terminal --icon vim \
+                       --disable-server \
+                       --execute vim --servername VIM --remote-silent "$@" &
+}
 
 extract () {
   if [ -f $1 ] ; then
@@ -128,3 +136,16 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 export PATH=/home/miroslav/bin/Sencha/Cmd/3.1.2.342:$PATH
 
 export SENCHA_CMD_3_0_0="/home/miroslav/bin/Sencha/Cmd/3.1.2.342"
+
+export PERL_LOCAL_LIB_ROOT="$PERL_LOCAL_LIB_ROOT:/home/miroslav/perl5";
+export PERL_MB_OPT="--install_base /home/miroslav/perl5";
+export PERL_MM_OPT="INSTALL_BASE=/home/miroslav/perl5";
+export PERL5LIB="/home/miroslav/perl5/lib/perl5:$PERL5LIB";
+export PATH="/home/miroslav/perl5/bin:$PATH";
+
+stty -ixon #disable Ctrl-S
+
+source ~/perl5/perlbrew/etc/bashrc
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

@@ -1,99 +1,64 @@
-set autoindent
-set backspace=indent,eol,start
-
-set tabstop=4
-autocmd BufNewFile,BufRead *.p[lm] set expandtab "expand tab only in perl files
-set shiftwidth=4
-set shiftround
-
-set ignorecase
-set smartcase
-
-"set smartindent
-call pathogen#infect()
-
+execute pathogen#infect()
 syntax on
-
 filetype plugin indent on
-set background=dark
-if has('gui_running')
-    set background=light
-    "colorscheme solarized
-    colorscheme github
-endif
-"set number
-set scrolloff=2
-set guifont=Inconsolata\ 12
-set guioptions=aegirLt
-"set guioptions=aegimrLt "to enable menu
-"set guioptions=aegimrLtT "to enable menu and toolbars
-
-"less violent matching-parenthesis highlighting
-"highlight MatchParen cterm=underline ctermbg=none ctermfg=none
-highlight MatchParen gui=bold guibg=bg guifg=Blue
-
+set mouse=a
+set history=10000
 set list
-set listchars=tab:\ \ ,trail:▒
+set listchars=tab:▷⋅,trail:⋅,nbsp:⋅
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set scrolloff=3
+set hidden
+set omnifunc=syntaxcomplete#Complete
+let g:SuperTabDefaultCompletionType = "context"
 
-nmap    <CR>        <C-]>
-nmap    <BS>        <C-T>
-nmap    <M-Left>    <C-O>
-nmap    <M-Right>   <C-I>
+colorscheme solarized
+highlight MatchParen cterm=none ctermbg=bg ctermfg=black
+let g:solarized_termcolors=256
+set background=light
 
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+set guioptions=aegirLt
+set guifont=Inconsolata\ 12
 
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
+inoremap <F2> <C-o>:w<CR>
+nnoremap <F2> :w<CR>
+set pastetoggle=<F3>
+nnoremap <F4> :bd<CR>
 
-inoremap <cr> <c-r>=EnterInBrackets()<cr>
+nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
 
-function! EnterInBrackets()
-    let c = strpart(getline('.'), col('.')-2, 2)
-    if c == "()" || c == "[]" || c == "{}"
-        return "\<cr>\<cr>\<Up>\<tab>"
-    else
-        return "\<cr>"
-    endif
-endfunction
+nnoremap <Up>    <Nop>
+nnoremap <Down>  <Nop>
+nnoremap <Left>  <Nop>
+nnoremap <Right> <Nop>
+nnoremap <M-Left> <C-o>
+nnoremap <M-Right> <C-i>
 
-
-"inoremap <expr> {  strpart(getline('.'), col('.'), 1) == "" ? "{}\<Left>" : "{"
-inoremap  {  {}<Left>
-inoremap <expr> }  strpart(getline('.'), col('.')-1, 1) == "}" ? "\<Right>" : "}"
-"inoremap <expr> [  strpart(getline('.'), col('.'), 1) == "" ? "[]\<Left>" : "["
-inoremap  [  []<Left>
-inoremap <expr> ]  strpart(getline('.'), col('.')-1, 1) == "]" ? "\<Right>" : "]"
-"inoremap <expr> (  strpart(getline('.'), col('.'), 1) == "" ? "()\<Left>" : "("
-inoremap  (  ()<Left>
-inoremap <expr> )  strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
-""inoremap " ""<Left>
-""inoremap ' ''<Left>
-
-:map <C-F11>  :sp tags<CR>:%s/^\([^	:]*:\)\=\([^	]*\).*/syntax keyword Tag \2/<CR>:wq! tags.vim<CR>/^<CR><C-F12>
-:map <C-F12>  :so tags.vim<CR>
+inoremap <C-Space> <C-x><C-o>
+inoremap <C-@> <C-x><C-o>
 
 
-"""""""Perl abbreviations (from PBP) TODO: put into file templates instead
-iab papp  :0r ~/.code_templates/perl_application.pl
-iab pmod  :0r ~/.code_templates/perl_module.pm
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'"
 
-"""""""Perl compiler
-set autowrite
-autocmd BufNewFile,BufRead *.pl compiler perl
-autocmd BufNewFile,BufRead *.pm compiler perl
 
-"""""""Perl folding
-""let perl_fold = 1
-""let perl_fold_blocks = 1
-""nmap + zo
-""nmap - zfa}
+if v:version >= 703
+    set undodir=~/.vim/undofiles
+    set undofile
+    set colorcolumn=+2
+endif
 
-"""""""Nette stuff
-autocmd BufNewFile,BufRead *.latte set filetype=html
-au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
+if has("autocmd")
+  au InsertEnter * silent execute "!sed -i -e 's/TERMINAL_CURSOR_SHAPE_BLOCK/TERMINAL_CURSOR_SHAPE_IBEAM/; s/ColorCursor=.*/ColorCursor=\\#000000000000/' ~/.terminal-solarized/xfce4/terminal/terminalrc"
+  au InsertLeave * silent execute "!sed -i -e 's/TERMINAL_CURSOR_SHAPE_IBEAM/TERMINAL_CURSOR_SHAPE_BLOCK/; s/ColorCursor=.*/ColorCursor=\\#cccccccccccc/' ~/.terminal-solarized/xfce4/terminal/terminalrc"
+  au VimLeave * silent execute "!sed -i -e 's/TERMINAL_CURSOR_SHAPE_IBEAM/TERMINAL_CURSOR_SHAPE_BLOCK/; s/ColorCursor=.*/ColorCursor=\\#cccccccccccc/' ~/.terminal-solarized/xfce4/terminal/terminalrc"
+endif
+
+
+"Autoreload .vimrc on save
+au! bufwritepost .vimrc source %
